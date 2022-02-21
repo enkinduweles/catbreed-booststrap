@@ -1,0 +1,36 @@
+$theme-colors: map-merge($theme-colors, $custom-theme);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, '$value');
+$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
+$utilities-text-colors: map-loop(
+  $utilities-colors,
+  rgba-css-var,
+  '$key',
+  'text'
+);
+$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, '$key', 'bg');
+
+// $utilities: map-merge(
+//   $utilities,
+//   (
+//     'font-size':
+//       map-merge(
+//         map-get($utilities, 'font-size'),
+//         (
+//           responsive: true,
+//         )
+//       ),
+//   )
+// );
+
+$utilities: map-merge(
+  $utilities,
+  (
+    'background-overlay': (
+      property: background,
+      class: bg-overlay,
+      values: (
+        gradient: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 100%),
+      ),
+    ),
+  )
+);
