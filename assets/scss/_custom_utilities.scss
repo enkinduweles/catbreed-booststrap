@@ -27,9 +27,11 @@ $utilities: map-merge(
   (
     'background-overlay': (
       property: background,
-      class: bg-overlay,
+      class: bg-overlay-gradient,
       values: (
-        gradient: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 100%),
+        25: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) 100%),
+        50: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) 100%),
+        75: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) 100%),
       ),
     ),
   )

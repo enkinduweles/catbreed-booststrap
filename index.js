@@ -1,5 +1,5 @@
 import { fetchBreedCats } from './assets/js/api/fetch-breed-cats.js';
-import createElement from './assets/js/createElement.js';
+import { createElement } from './assets/js/createElement.js';
 import {
   filterBreedByCountry,
   listCountriesHaveCats,
@@ -18,6 +18,12 @@ const config = {
   padding: { right: '3rem' },
   breakpoints: {
     768: {
+      perPage: 3,
+      gap: '.7rem',
+      height: '20rem',
+      arrows: false,
+    },
+    576: {
       perPage: 2,
       gap: '.7rem',
       height: '20rem',
@@ -53,4 +59,35 @@ const config = {
       new Splide(elms[i], config).mount();
     }
   }
+
+  const modalContainer = document.getElementById('modalInfo');
+  modalContainer.addEventListener('show.bs.modal', function (event) {
+    const targetElement = event.relatedTarget;
+    console.log(targetElement);
+    const breedId = targetElement.getAttribute('data-bs-breed');
+    console.log(breedId);
+    const [foundBreed] = breedCats.filter((breed) => {
+      return breed.id === breedId;
+    });
+
+    const catTemperament = foundBreed.temperament.split(',');
+
+    const modalTitle = document.querySelector('.modal-title');
+    const modalDescription = document.querySelector('#description p');
+    const modalBodyLifeSpan = document.querySelector('#lifeSpan span');
+    const modalBodyTemperament = document.querySelectorAll('#temperament span');
+    const modalBodyWiki = document.querySelector('#wiki a');
+
+    console.log(modalBodyTemperament);
+    modalTitle.textContent = foundBreed.name;
+    modalDescription.textContent = foundBreed.description;
+    modalBodyLifeSpan.textContent = `${foundBreed.lifeSpan} years`;
+
+    modalBodyTemperament.forEach((element, index) => {
+      element.textContent = catTemperament[index];
+    });
+
+    modalBodyWiki.setAttribute('href', foundBreed.wiki);
+    modalBodyWiki.textContent = `More about ${foundBreed.name}`;
+  });
 })();

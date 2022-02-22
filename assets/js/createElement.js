@@ -1,24 +1,48 @@
 import { filterBreedByCountry } from './filterBreedByCountry.js';
 
-const createMainElement = (cats) => {
-  const container = document.createElement('div');
-  // container.classList.add('bg-dark', 'bg-gradient');
+const createMainElement = (elements) => {
+  const cats = [...elements];
+  const modal = createModal(cats[0]);
 
-  // container.style.height = '80vh';
+  const banner = `
+  <div class="card border-0 rounded-0"  style="height: 50vh">
+  <img src="${cats[0].image}" class="card-img rounded-0 img-fluid" style="height: 100%; object-fit: cover" alt="">
+  <div class="card-img-overlay rounded-0 bg-overlay-gradient-50">
+  <div class="d-flex flex-column justify-content-center h-100" style="max-width: 736px">
+    <h2 class="card-title text-contrastTerciary mb-4 display-3">${cats[0].name}</h2>
+    <p class="card-text text-light fs-5 text-truncated">${cats[0].description}</p>
+    <button data-bs-breed=${cats[0].id} type="button" class="btn btn-contrastPrimary align-self-start" data-bs-toggle="modal" data-bs-target="#modalInfo">
+    <i class="bi bi-info-circle me-1"></i>
+      See more
+    </button>
+    </div>
+  </div>
+</div>
+${modal}
+  `;
 
-  const catTemperament = cats[0].temperament.split(',');
+  return banner;
+};
+
+const createModal = (content) => {
+  const catTemperament = content.temperament.split(',');
+
+  const description = `
+  <div id="description" class="d-flex flex-column align-items-center border-bottom border-contrastTerciary pb-3 mb-3">
+  <p class="text-light">${content.description} years</p>
+  </div>
+  `;
 
   const catLifeSpan = `
-  <div class="border-bottom border-contrastTerciary pb-3 mb-3">
-  <p class="d-inline-block text-contrastTerciary fw-bold text-uppercase w-25 mb-0">Life span:</p>
-  <span class="text-light">${cats[0].lifeSpan} years</span>
+  <div id="lifeSpan" class="d-flex flex-column align-items-center border-bottom border-contrastTerciary pb-3 mb-3">
+  <p class=" text-contrastTerciary fw-bold text-uppercase mb-1">Life span</p>
+  <span class="text-light">${content.lifeSpan} years</span>
   </div>
-  
   `;
 
   const listCatTemperament = `
-  <div class="border-bottom border-contrastTerciary pb-3 mb-3">
-  <p class="d-inline-block text-contrastTerciary fw-bold text-uppercase w-25 align-top mb-0">Temperament:</p>
+  <div id="temperament" class="d-flex flex-column align-items-center border-bottom border-contrastTerciary pb-3 mb-3">
+  <p class="text-contrastTerciary fw-bold text-uppercase align-top mb-1">Temperament</p>
   <div class="d-inline-block">
     ${catTemperament
       .map((temperamentName) => {
@@ -30,9 +54,9 @@ const createMainElement = (cats) => {
   `;
 
   const wikiLink = `
-  <div class="border-bottom border-contrastTerciary pb-3 mb-3">
-  <p class="d-inline-block text-contrastTerciary fw-bold text-uppercase w-25 mb-0">Wiki:</p>
-  <a class="text-light" href="#" role="button">Link</a>
+  <div  id="wiki" class="d-flex flex-column align-items-center border-bottom border-contrastTerciary pb-3 mb-3">
+  <p class="text-contrastTerciary fw-bold text-uppercase mb-1">Wiki</p>
+  <a class="text-light" href="${content.wiki}" role="button">More about ${content.name}</a>
   </div>
   `;
 
@@ -41,10 +65,11 @@ const createMainElement = (cats) => {
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content bg-secondary">
       <div class="modal-header border-2 border-contrastTerciary">
-        <h4 class="modal-title text-contrastTerciary" id="modalInfolabel">${cats[0].name}</h4>
+        <h4 class="modal-title text-contrastTerciary" id="modalInfolabel">${content.name}</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        ${description}
         ${catLifeSpan}
         ${listCatTemperament}
         ${wikiLink}
@@ -54,24 +79,7 @@ const createMainElement = (cats) => {
 </div>
   `;
 
-  const banner = `
-  <div class="card border-0 rounded-0"  style="height: 50vh">
-  <img src="${cats[0].image}" class="card-img rounded-0 img-fluid" style="height: 100%; object-fit: cover" alt="">
-  <div class="card-img-overlay rounded-0 bg-overlay-gradient">
-  <div class="d-flex flex-column justify-content-center h-100" style="max-width: 736px">
-    <h2 class="card-title text-contrastTerciary mb-4 display-3">${cats[0].name}</h2>
-    <p class="card-text text-light fs-5 clamp">${cats[0].description}</p>
-    <button type="button" class="btn btn-contrastPrimary align-self-start" data-bs-toggle="modal" data-bs-target="#modalInfo">
-    <i class="bi bi-info-circle"></i>
-      See more
-    </button>
-    </div>
-  </div>
-</div>
-${modal}
-  `;
-
-  return banner;
+  return modal;
 };
 
 const createCarousel = (elements) => {
@@ -84,8 +92,13 @@ const createCarousel = (elements) => {
       ${dataFromAPI
         .map((item) => {
           return `
-        <li class="splide__slide">
-          <img src="${item.image}" />
+        <li class="splide__slide ">
+        <img src="${item.image}" />
+         
+          <div data-bs-breed=${item.id} data-bs-toggle="modal" data-bs-target="#modalInfo" class="btn d-flex justify-content-center align-items-end bg-overlay-gradient-25 h-100 w-100 text-center pt-2 pb-2">
+          <span class="text-contrastTerciary fw-bold">${item.name}</span>
+          </div>
+        
         </li>
         `;
         })
@@ -122,4 +135,4 @@ const createElement = (elements, countries) => {
   return `${banner}${sections}`;
 };
 
-export default createElement;
+export { createElement };
