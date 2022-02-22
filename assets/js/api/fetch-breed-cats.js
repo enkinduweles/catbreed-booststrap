@@ -9,8 +9,16 @@ const fetchBreedCats = async (orderBy = 'asc') => {
   });
 
   const breedCatsWithImage = filterCatsByImage.map((breedCat) => {
-    const { description, id, image, name, origin, wikipedia_url, temperament } =
-      breedCat;
+    const {
+      description,
+      id,
+      image,
+      name,
+      origin,
+      wikipedia_url,
+      temperament,
+      life_span,
+    } = breedCat;
     return {
       id,
       name,
@@ -19,6 +27,7 @@ const fetchBreedCats = async (orderBy = 'asc') => {
       temperament,
       origin,
       wiki: wikipedia_url,
+      lifeSpan: life_span,
     };
   });
 
