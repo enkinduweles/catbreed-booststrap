@@ -1,6 +1,6 @@
 const listCountriesHaveCats = (elements) => {
   const countries = new Set();
-  console.log(elements);
+
   elements.map((element) => {
     const { origin } = element;
     countries.add(origin);
@@ -14,7 +14,6 @@ const filterBreedByCountry = (elements, country) => {
     return element.origin === country;
   });
 
-  console.log(resultByCountry);
   return resultByCountry;
 };
 

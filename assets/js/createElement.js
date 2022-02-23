@@ -1,24 +1,22 @@
 import { filterBreedByCountry } from './filterBreedByCountry.js';
 
-const createMainElement = (elements) => {
-  const cats = [...elements];
-  const modal = createModal(cats[0]);
+const createBanner = (elements) => {
+  const catBreeds = [...elements];
 
   const banner = `
   <div class="card border-0 rounded-0"  style="height: 50vh">
-  <img src="${cats[0].image}" class="card-img rounded-0 img-fluid" style="height: 100%; object-fit: cover" alt="">
+  <img src="${catBreeds[0].image}" class="card-img rounded-0 img-fluid" style="height: 100%; object-fit: cover" alt="">
   <div class="card-img-overlay rounded-0 bg-overlay-gradient-50">
   <div class="d-flex flex-column justify-content-center h-100" style="max-width: 736px">
-    <h2 class="card-title text-contrastTerciary mb-4 display-3">${cats[0].name}</h2>
-    <p class="card-text text-light fs-5 text-truncated">${cats[0].description}</p>
-    <button data-bs-breed=${cats[0].id} type="button" class="btn btn-contrastPrimary align-self-start" data-bs-toggle="modal" data-bs-target="#modalInfo">
-    <i class="bi bi-info-circle me-1"></i>
+    <h2 class="card-title text-contrastTerciary mb-4 display-3">${catBreeds[0].name}</h2>
+    <p class="card-text text-light fs-5 text-truncated">${catBreeds[0].description}</p>
+    <button data-bs-breed=${catBreeds[0].id} type="button" class="btn btn-contrastPrimary align-self-start" data-bs-toggle="modal" data-bs-target="#modalInfo">
+    <i class="bi bi-info-circle me-1   "></i>
       See more
     </button>
     </div>
   </div>
 </div>
-${modal}
   `;
 
   return banner;
@@ -83,20 +81,20 @@ const createModal = (content) => {
 };
 
 const createCarousel = (elements) => {
-  const dataFromAPI = [...elements];
+  const catBreeds = [...elements];
 
   const carousel = `
     <div class="splide">
     <div class="splide__track">
       <ul class="splide__list">
-      ${dataFromAPI
-        .map((item) => {
+      ${catBreeds
+        .map((catBreed) => {
           return `
         <li class="splide__slide ">
-        <img src="${item.image}" />
+        <img src="${catBreed.image}" />
          
-          <div data-bs-breed=${item.id} data-bs-toggle="modal" data-bs-target="#modalInfo" class="btn d-flex justify-content-center align-items-end bg-overlay-gradient-25 h-100 w-100 text-center pt-2 pb-2">
-          <span class="text-contrastTerciary fw-bold">${item.name}</span>
+          <div data-bs-breed=${catBreed.id} data-bs-toggle="modal" data-bs-target="#modalInfo" class="btn d-flex justify-content-center align-items-end bg-overlay-gradient-25 h-100 w-100 text-center pt-2 pb-2">
+          <span class="text-contrastTerciary fw-bold">${catBreed.name}</span>
           </div>
         
         </li>
@@ -112,9 +110,9 @@ const createCarousel = (elements) => {
 };
 
 const createSection = (elements, countries) => {
-  const countriesParsed = Array.from(countries);
+  const countriesToArray = Array.from(countries);
 
-  const sections = countriesParsed
+  const sections = countriesToArray
     .map((country) => {
       return `
       <section class="container mb-5">
@@ -128,11 +126,12 @@ const createSection = (elements, countries) => {
   return sections;
 };
 
-const createElement = (elements, countries) => {
-  const banner = createMainElement(elements);
-  const sections = createSection(elements, countries);
+const createElement = (catBreeds, countriesHaveCats) => {
+  const banner = createBanner(catBreeds);
+  const sections = createSection(catBreeds, countriesHaveCats);
+  const modal = createModal(catBreeds[0]);
 
-  return `${banner}${sections}`;
+  return `${banner}${sections}${modal}`;
 };
 
 export { createElement };

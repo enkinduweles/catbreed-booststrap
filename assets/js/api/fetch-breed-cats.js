@@ -47,7 +47,7 @@ const fetchBreedCats = async (orderBy = 'asc') => {
     });
   }
 
-  console.log(breedCatsWithImage);
   return breedCatsWithImage;
 };
+
 export { fetchBreedCats };
