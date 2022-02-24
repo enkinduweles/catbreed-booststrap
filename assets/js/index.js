@@ -13,6 +13,8 @@ const rootElement = document.querySelector('main');
 
   render(elementsToRender, rootElement);
 
+  createSplideInstance();
+
   const modalContainer = document.getElementById('modalInfo');
 
   modalContainer.addEventListener('show.bs.modal', function (event) {
@@ -43,6 +45,4 @@ const rootElement = document.querySelector('main');
     modalBodyWiki.setAttribute('href', foundBreed.wiki);
     modalBodyWiki.textContent = `More about ${foundBreed.name}`;
   });
-
-  createSplideInstance();
 })();

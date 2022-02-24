@@ -1,28 +1,28 @@
 const config = {
-  perPage: 4,
+  perPage: 6,
   rewind: true,
   pagination: false,
-  height: '20rem',
+  height: '12rem',
   cover: true,
   gap: '.7rem',
-  padding: { right: '3rem' },
+  padding: { right: '2rem' },
   breakpoints: {
-    768: {
+    992: {
+      perPage: 4,
+      gap: '.7rem',
+      height: '12rem',
+      arrows: false,
+    },
+    600: {
       perPage: 3,
       gap: '.7rem',
-      height: '20rem',
+      height: '12rem',
       arrows: false,
     },
-    576: {
+    500: {
       perPage: 2,
       gap: '.7rem',
-      height: '20rem',
-      arrows: false,
-    },
-    480: {
-      perPage: 1,
-      gap: '.7rem',
-      height: '20rem',
+      height: '12rem',
       arrows: false,
     },
   },

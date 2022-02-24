@@ -82,7 +82,12 @@ const createModal = (content) => {
 
 const createCarousel = (elements) => {
   const catBreeds = [...elements];
-
+  // <div data-bs-breed=${catBreed.id} data-bs-toggle="modal" data-bs-target="#modalInfo" class="btn d-flex justify-content-center align-items-end bg-overlay-gradient-25 h-100 w-100 text-center pt-2 pb-2">
+  // <span class="text-contrastTerciary fw-bold">${catBreed.name}</span>
+  // </div>
+  const test = `
+ 
+  `;
   const carousel = `
     <div class="splide">
     <div class="splide__track">
@@ -91,12 +96,12 @@ const createCarousel = (elements) => {
         .map((catBreed) => {
           return `
         <li class="splide__slide ">
-        <img src="${catBreed.image}" />
-         
-          <div data-bs-breed=${catBreed.id} data-bs-toggle="modal" data-bs-target="#modalInfo" class="btn d-flex justify-content-center align-items-end bg-overlay-gradient-25 h-100 w-100 text-center pt-2 pb-2">
-          <span class="text-contrastTerciary fw-bold">${catBreed.name}</span>
-          </div>
-        
+          <div class="card h-100" data-bs-breed=${catBreed.id} data-bs-toggle="modal" data-bs-target="#modalInfo" style="cursor: pointer">
+                <img src="${catBreed.image}" class="card-img-top" alt="${catBreed.name}" style="height:65%; object-fit: cover">
+                <div class="card-body bg-secondary">
+                  <p class="card-title text-center text-contrastTerciary fw-bold">${catBreed.name}</p>
+                </div>
+              </div>
         </li>
         `;
         })
@@ -115,7 +120,7 @@ const createSection = (elements, countries) => {
   const sections = countriesToArray
     .map((country) => {
       return `
-      <section class="container mb-5">
+      <section class="container-lg mb-5">
         <h3 class="text-contrastTerciary mt-2 mb-3">${country}</h3>
         ${createCarousel(filterBreedByCountry(elements, country))}
         </section>
